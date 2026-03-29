@@ -72,7 +72,7 @@ export function AnswerCard({ answer, questionId }: { answer: Answer; questionId:
       <div className="flex items-center gap-2 mb-3">
         {isAI ? (
           <>
-            <Bot className="h-4 w-4 text-pulse-ai" />
+            <img src={speechIcon} alt="AI" className="h-4 w-auto" />
             <Badge className="bg-pulse-ai text-pulse-ai-foreground text-xs border-none">Pulse AI</Badge>
           </>
         ) : (
