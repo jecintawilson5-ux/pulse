@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Sparkles } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import speechIcon from "@/assets/logo-v4-speech-pulse.png";
 
 export function AskBox() {
   const navigate = useNavigate();
