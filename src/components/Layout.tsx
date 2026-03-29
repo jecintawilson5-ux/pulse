@@ -4,7 +4,7 @@ import { RightSidebar } from "./RightSidebar";
 
 export function Layout({ children, showSidebars = true }: { children: React.ReactNode; showSidebars?: boolean }) {
   return (
-    <div className="dark min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col">
       <TopNav />
       <div className="flex flex-1">
         {showSidebars && <LeftSidebar />}

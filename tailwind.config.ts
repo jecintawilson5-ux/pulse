@@ -66,6 +66,12 @@ export default {
           ai: "hsl(var(--pulse-ai))",
           "ai-foreground": "hsl(var(--pulse-ai-foreground))",
         },
+        badge: {
+          DEFAULT: "hsl(var(--badge))",
+          foreground: "hsl(var(--badge-foreground))",
+        },
+        "primary-hover": "hsl(var(--primary-hover))",
+        "accent-hover": "hsl(var(--accent-hover))",
       },
       borderRadius: {
         lg: "var(--radius)",
