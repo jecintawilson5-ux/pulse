@@ -1,4 +1,5 @@
-import { ThumbsUp, Bot, User, Clock } from "lucide-react";
+import { ThumbsUp, User, Clock } from "lucide-react";
+import speechIcon from "@/assets/logo-v4-speech-pulse.png";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useState, useCallback } from "react";
