@@ -1,9 +1,10 @@
-import { Search, Plus, User, Zap } from "lucide-react";
+import { Search, Plus, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { Input } from "@/components/ui/input";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import logoP from "@/assets/logo-v3-p-pulse.png";
 
 export function TopNav() {
   const navigate = useNavigate();
@@ -24,11 +25,7 @@ export function TopNav() {
           onClick={() => navigate("/")}
           className="flex items-center gap-2 shrink-0"
         >
-          <div className="relative flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
-            <Zap className="h-4 w-4 text-primary-foreground" />
-            <div className="absolute inset-0 rounded-lg bg-primary animate-pulse-ring opacity-0" />
-          </div>
-          <span className="text-xl font-bold tracking-tight hidden sm:block">Pulse</span>
+          <img src={logoP} alt="Pulse" className="h-8 w-auto" />
         </button>
 
         {/* Search */}

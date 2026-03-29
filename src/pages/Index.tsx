@@ -6,6 +6,8 @@ import { QuestionCard } from "@/components/QuestionCard";
 import { fetchQuestions } from "@/lib/api";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
+import heroBrain from "@/assets/logo-v1-brain-pulse.png";
+import bgNodes from "@/assets/logo-v2-nodes-wave.png";
 
 const tabs = ["For You", "Trending", "Newest"] as const;
 
@@ -21,7 +23,21 @@ export default function Index() {
 
   return (
     <Layout>
-      <div className="max-w-2xl mx-auto p-4 md:p-6 space-y-5">
+      {/* Background pattern */}
+      <div className="fixed inset-0 pointer-events-none opacity-[0.03] dark:opacity-[0.02] z-0">
+        <img src={bgNodes} alt="" className="w-full h-full object-cover" aria-hidden="true" />
+      </div>
+
+      <div className="relative z-10 max-w-2xl mx-auto p-4 md:p-6 space-y-5">
+        {/* Hero */}
+        <div className="flex flex-col items-center text-center py-6 space-y-3">
+          <img src={heroBrain} alt="Pulse AI" className="h-12 w-auto animate-pulse" />
+          <h1 className="text-2xl font-bold tracking-tight">Ask anything. Get intelligent answers.</h1>
+          <p className="text-sm text-muted-foreground max-w-md">
+            Pulse combines AI with community knowledge to deliver fast, reliable insights.
+          </p>
+        </div>
+
         <AskBox />
 
         {/* Tabs */}

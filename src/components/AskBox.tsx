@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Sparkles } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import speechIcon from "@/assets/logo-v4-speech-pulse.png";
 
 export function AskBox() {
   const navigate = useNavigate();
@@ -14,7 +14,7 @@ export function AskBox() {
       }`}
     >
       <div className="flex items-center gap-2 mb-2">
-        <Sparkles className="h-4 w-4 text-primary" />
+        <img src={speechIcon} alt="" className="h-5 w-auto" />
         <span className="text-xs font-medium text-muted-foreground">AI-Powered Answers</span>
       </div>
       <Input

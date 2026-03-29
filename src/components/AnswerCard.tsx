@@ -1,4 +1,5 @@
-import { ThumbsUp, Bot, User, Clock } from "lucide-react";
+import { ThumbsUp, User, Clock } from "lucide-react";
+import speechIcon from "@/assets/logo-v4-speech-pulse.png";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useState, useCallback } from "react";
@@ -71,7 +72,7 @@ export function AnswerCard({ answer, questionId }: { answer: Answer; questionId:
       <div className="flex items-center gap-2 mb-3">
         {isAI ? (
           <>
-            <Bot className="h-4 w-4 text-pulse-ai" />
+            <img src={speechIcon} alt="AI" className="h-4 w-auto" />
             <Badge className="bg-pulse-ai text-pulse-ai-foreground text-xs border-none">Pulse AI</Badge>
           </>
         ) : (
