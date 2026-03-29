@@ -50,6 +50,7 @@ export function TopNav() {
             <Plus className="h-4 w-4" />
             <span className="hidden sm:inline">Ask Question</span>
           </Button>
+          <ThemeToggle />
           <Button variant="ghost" size="icon" className="rounded-full">
             <User className="h-5 w-5" />
           </Button>
