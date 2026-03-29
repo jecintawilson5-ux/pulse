@@ -1,9 +1,10 @@
-import { Search, Plus, User, Zap } from "lucide-react";
+import { Search, Plus, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { Input } from "@/components/ui/input";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import logoP from "@/assets/logo-v3-p-pulse.png";
 
 export function TopNav() {
   const navigate = useNavigate();
