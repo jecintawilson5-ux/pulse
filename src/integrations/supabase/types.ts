@@ -14,29 +14,59 @@ export type Database = {
   }
   public: {
     Tables: {
+      activity_log: {
+        Row: {
+          action: string
+          created_at: string
+          id: string
+          metadata: Json | null
+          session_id: string
+        }
+        Insert: {
+          action: string
+          created_at?: string
+          id?: string
+          metadata?: Json | null
+          session_id: string
+        }
+        Update: {
+          action?: string
+          created_at?: string
+          id?: string
+          metadata?: Json | null
+          session_id?: string
+        }
+        Relationships: []
+      }
       answers: {
         Row: {
           content: string
           created_at: string
           id: string
+          moderation_status: string
           question_id: string
           type: Database["public"]["Enums"]["answer_type"]
+          updated_at: string | null
           votes: number
         }
         Insert: {
           content: string
           created_at?: string
           id?: string
+          moderation_status?: string
           question_id: string
           type?: Database["public"]["Enums"]["answer_type"]
+          updated_at?: string | null
           votes?: number
         }
         Update: {
           content?: string
           created_at?: string
           id?: string
+          moderation_status?: string
           question_id?: string
           type?: Database["public"]["Enums"]["answer_type"]
+          updated_at?: string | null
           votes?: number
         }
         Relationships: [
@@ -51,22 +81,64 @@ export type Database = {
       }
       questions: {
         Row: {
+          ai_status: string
           created_at: string
           description: string | null
           id: string
+          quality_score: number | null
+          status: string
           title: string
+          updated_at: string | null
         }
         Insert: {
+          ai_status?: string
           created_at?: string
           description?: string | null
           id?: string
+          quality_score?: number | null
+          status?: string
           title: string
+          updated_at?: string | null
         }
         Update: {
+          ai_status?: string
           created_at?: string
           description?: string | null
           id?: string
+          quality_score?: number | null
+          status?: string
           title?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      reports: {
+        Row: {
+          content_id: string
+          content_type: string
+          created_at: string
+          id: string
+          reason: string
+          reporter_session_id: string
+          status: string
+        }
+        Insert: {
+          content_id: string
+          content_type: string
+          created_at?: string
+          id?: string
+          reason: string
+          reporter_session_id: string
+          status?: string
+        }
+        Update: {
+          content_id?: string
+          content_type?: string
+          created_at?: string
+          id?: string
+          reason?: string
+          reporter_session_id?: string
+          status?: string
         }
         Relationships: []
       }
