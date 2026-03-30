@@ -9,9 +9,18 @@ import AskPage from "./pages/AskPage";
 import SearchPage from "./pages/SearchPage";
 import TrendingPage from "./pages/TrendingPage";
 import UnansweredPage from "./pages/UnansweredPage";
+import ActivityPage from "./pages/ActivityPage";
 import NotFound from "./pages/NotFound";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 30000,
+      gcTime: 1000 * 60 * 10,
+      retry: 2,
+    },
+  },
+});
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -26,6 +35,8 @@ const App = () => (
           <Route path="/search" element={<SearchPage />} />
           <Route path="/trending" element={<TrendingPage />} />
           <Route path="/unanswered" element={<UnansweredPage />} />
+          <Route path="/activity" element={<ActivityPage />} />
+          <Route path="/profile" element={<NotFound />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

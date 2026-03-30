@@ -1,14 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
 import { Layout } from "@/components/Layout";
 import { QuestionCard } from "@/components/QuestionCard";
-import { fetchQuestions } from "@/lib/api";
+import { fetchAllQuestions } from "@/lib/api";
 import { Skeleton } from "@/components/ui/skeleton";
 import { TrendingUp } from "lucide-react";
 
 export default function TrendingPage() {
   const { data: questions, isLoading } = useQuery({
-    queryKey: ["questions", "trending"],
-    queryFn: () => fetchQuestions("trending"),
+    queryKey: ["questions-all", "trending"],
+    queryFn: () => fetchAllQuestions("trending"),
   });
 
   return (

@@ -1,26 +1,43 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { Layout } from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { createQuestion } from "@/lib/api";
+import { checkProfanity } from "@/lib/profanity";
+import { logActivity } from "@/lib/activity";
 import { toast } from "sonner";
-import { Send, Sparkles } from "lucide-react";
+import { Send, Sparkles, AlertTriangle } from "lucide-react";
 
 export default function AskPage() {
   const navigate = useNavigate();
-  const [title, setTitle] = useState("");
+  const [searchParams] = useSearchParams();
+  const [title, setTitle] = useState(searchParams.get("q") || "");
   const [description, setDescription] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [profanityWarning, setProfanityWarning] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const trimmedTitle = title.trim().replace(/<[^>]*>/g, ""); // sanitize
+    const trimmedTitle = title.trim().replace(/<[^>]*>/g, "");
 
     if (trimmedTitle.length < 10) {
       toast.error("Title must be at least 10 characters.");
       return;
+    }
+
+    // Check profanity
+    const titleCheck = checkProfanity(trimmedTitle);
+    const descCheck = checkProfanity(description);
+
+    if (titleCheck.severity === "severe" || descCheck.severity === "severe") {
+      toast.error("Your question contains inappropriate language. Please rephrase.");
+      return;
+    }
+
+    if (titleCheck.severity === "mild" || descCheck.severity === "mild") {
+      setProfanityWarning("Your question may contain strong language. It will still be posted.");
     }
 
     setSubmitting(true);
@@ -29,6 +46,7 @@ export default function AskPage() {
         trimmedTitle,
         description.trim().replace(/<[^>]*>/g, "") || undefined
       );
+      logActivity("asked_question", trimmedTitle, { questionId: question.id });
       toast.success("Question posted!");
       navigate(`/question/${question.id}`);
     } catch {
@@ -53,10 +71,11 @@ export default function AskPage() {
             </label>
             <Input
               value={title}
-              onChange={(e) => setTitle(e.target.value)}
+              onChange={(e) => { setTitle(e.target.value); setProfanityWarning(""); }}
               placeholder="e.g. How does backpropagation work in neural networks?"
               className="bg-secondary border-none"
               maxLength={200}
+              autoFocus
             />
             <p className="text-xs text-muted-foreground mt-1">{title.length}/200 characters (min 10)</p>
           </div>
@@ -72,6 +91,13 @@ export default function AskPage() {
               maxLength={2000}
             />
           </div>
+
+          {profanityWarning && (
+            <div className="flex items-center gap-2 text-sm text-badge rounded-lg bg-badge/10 p-3">
+              <AlertTriangle className="h-4 w-4 shrink-0" />
+              {profanityWarning}
+            </div>
+          )}
 
           <Button type="submit" disabled={submitting} className="w-full gap-1.5">
             <Send className="h-4 w-4" />
