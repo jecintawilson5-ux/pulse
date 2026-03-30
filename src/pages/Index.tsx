@@ -1,25 +1,64 @@
-import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useState, useCallback, useEffect, useRef } from "react";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { Layout } from "@/components/Layout";
 import { AskBox } from "@/components/AskBox";
 import { QuestionCard } from "@/components/QuestionCard";
 import { fetchQuestions } from "@/lib/api";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { Sparkles, TrendingUp, HelpCircle, Loader2 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import heroBrain from "@/assets/logo-v1-brain-pulse.png";
 import bgNodes from "@/assets/logo-v2-nodes-wave.png";
 
-const tabs = ["For You", "Trending", "Newest"] as const;
+const tabs = [
+  { key: "newest" as const, label: "For You", icon: Sparkles },
+  { key: "trending" as const, label: "Trending", icon: TrendingUp },
+] as const;
+
+const suggestedPrompts = [
+  "How does machine learning differ from traditional programming?",
+  "What are the best investment strategies for 2025?",
+  "How do I get started with web development?",
+];
 
 export default function Index() {
-  const [activeTab, setActiveTab] = useState<(typeof tabs)[number]>("For You");
+  const [activeTab, setActiveTab] = useState<"newest" | "trending">("newest");
+  const navigate = useNavigate();
+  const loadMoreRef = useRef<HTMLDivElement>(null);
 
-  const sortBy = activeTab === "Trending" ? "trending" : "newest";
-  const { data: questions, isLoading } = useQuery({
-    queryKey: ["questions", sortBy],
-    queryFn: () => fetchQuestions(sortBy as "newest" | "trending"),
+  const {
+    data,
+    isLoading,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useInfiniteQuery({
+    queryKey: ["questions", activeTab],
+    queryFn: ({ pageParam = 0 }) => fetchQuestions(activeTab, pageParam, 10),
+    getNextPageParam: (lastPage, allPages) =>
+      lastPage.hasMore ? allPages.length : undefined,
+    initialPageParam: 0,
     refetchInterval: 15000,
   });
+
+  // Infinite scroll observer
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && hasNextPage && !isFetchingNextPage) {
+          fetchNextPage();
+        }
+      },
+      { threshold: 0.5 }
+    );
+    const el = loadMoreRef.current;
+    if (el) observer.observe(el);
+    return () => { if (el) observer.unobserve(el); };
+  }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
+
+  const allQuestions = data?.pages.flatMap((p) => p.questions) ?? [];
 
   return (
     <Layout>
@@ -44,17 +83,18 @@ export default function Index() {
         <div className="flex gap-1 border-b border-border">
           {tabs.map((tab) => (
             <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
+              key={tab.key}
+              onClick={() => setActiveTab(tab.key)}
               className={cn(
-                "px-4 py-2.5 text-sm font-medium transition-colors relative",
-                activeTab === tab
+                "px-4 py-2.5 text-sm font-medium transition-colors relative flex items-center gap-1.5",
+                activeTab === tab.key
                   ? "text-primary"
                   : "text-muted-foreground hover:text-foreground"
               )}
             >
-              {tab}
-              {activeTab === tab && (
+              <tab.icon className="h-3.5 w-3.5" />
+              {tab.label}
+              {activeTab === tab.key && (
                 <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary rounded-full" />
               )}
             </button>
@@ -63,17 +103,50 @@ export default function Index() {
 
         {/* Feed */}
         <div className="space-y-3">
-          {isLoading
-            ? Array.from({ length: 5 }).map((_, i) => (
-                <Skeleton key={i} className="h-24 rounded-xl" />
-              ))
-            : questions && questions.length > 0
-            ? questions.map((q) => <QuestionCard key={q.id} question={q} />)
-            : (
-              <div className="text-center py-12 text-muted-foreground">
-                <p className="text-sm">No questions yet. Be the first to ask!</p>
+          {isLoading ? (
+            Array.from({ length: 5 }).map((_, i) => (
+              <Skeleton key={i} className="h-24 rounded-xl" />
+            ))
+          ) : allQuestions.length > 0 ? (
+            <>
+              {allQuestions.map((q) => (
+                <QuestionCard key={q.id} question={q} />
+              ))}
+              {/* Infinite scroll sentinel */}
+              <div ref={loadMoreRef} className="py-4 text-center">
+                {isFetchingNextPage ? (
+                  <div className="flex items-center justify-center gap-2 text-muted-foreground">
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    <span className="text-sm">Loading more...</span>
+                  </div>
+                ) : !hasNextPage ? (
+                  <p className="text-xs text-muted-foreground">You've seen it all 🎉</p>
+                ) : null}
               </div>
-            )}
+            </>
+          ) : (
+            <div className="text-center py-12 space-y-5">
+              <div className="space-y-2">
+                <HelpCircle className="h-10 w-10 text-muted-foreground/30 mx-auto" />
+                <p className="text-sm text-muted-foreground">No questions yet 👀</p>
+                <p className="text-xs text-muted-foreground">Be the first to ask!</p>
+              </div>
+              <div className="space-y-2">
+                <p className="text-xs font-medium text-muted-foreground">Try asking:</p>
+                {suggestedPrompts.map((prompt) => (
+                  <Button
+                    key={prompt}
+                    variant="outline"
+                    size="sm"
+                    className="w-full justify-start text-left text-xs h-auto py-2.5 px-3"
+                    onClick={() => navigate(`/ask?q=${encodeURIComponent(prompt)}`)}
+                  >
+                    {prompt}
+                  </Button>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </Layout>

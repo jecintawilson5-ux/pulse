@@ -1,10 +1,11 @@
-import { supabase } from "./supabase";
+import { supabase } from "@/integrations/supabase/client";
 
 export interface Question {
   id: string;
   title: string;
   description: string | null;
   created_at: string;
+  ai_status?: string;
   answer_count?: number;
   vote_count?: number;
 }
@@ -18,18 +19,30 @@ export interface Answer {
   created_at: string;
 }
 
-// Questions
-export async function fetchQuestions(sortBy: "newest" | "trending" = "newest"): Promise<Question[]> {
+// Questions with pagination
+export async function fetchQuestions(
+  sortBy: "newest" | "trending" = "newest",
+  page = 0,
+  limit = 10
+): Promise<{ questions: Question[]; hasMore: boolean }> {
+  const from = page * limit;
+  const to = from + limit - 1;
+
   const { data: questions, error } = await supabase
     .from("questions")
     .select("*")
-    .order("created_at", { ascending: false });
+    .order("created_at", { ascending: false })
+    .range(from, to + 1); // fetch one extra to check hasMore
 
   if (error) throw error;
 
-  // Get answer counts and vote sums
+  const items = questions || [];
+  const hasMore = items.length > limit;
+  const pageItems = hasMore ? items.slice(0, limit) : items;
+
+  // Enrich with counts
   const enriched = await Promise.all(
-    (questions || []).map(async (q) => {
+    pageItems.map(async (q) => {
       const { count } = await supabase
         .from("answers")
         .select("*", { count: "exact", head: true })
@@ -41,16 +54,21 @@ export async function fetchQuestions(sortBy: "newest" | "trending" = "newest"): 
         .eq("question_id", q.id);
 
       const voteCount = (answers || []).reduce((sum, a) => sum + (a.votes || 0), 0);
-
       return { ...q, answer_count: count || 0, vote_count: voteCount };
     })
   );
 
   if (sortBy === "trending") {
-    return enriched.sort((a, b) => (b.vote_count || 0) - (a.vote_count || 0));
+    enriched.sort((a, b) => (b.vote_count || 0) - (a.vote_count || 0));
   }
 
-  return enriched;
+  return { questions: enriched, hasMore };
+}
+
+// Legacy compat
+export async function fetchAllQuestions(sortBy: "newest" | "trending" = "newest"): Promise<Question[]> {
+  const { questions } = await fetchQuestions(sortBy, 0, 100);
+  return questions;
 }
 
 export async function fetchQuestion(id: string): Promise<Question | null> {
@@ -92,7 +110,7 @@ export async function fetchAnswers(questionId: string): Promise<Answer[]> {
     .from("answers")
     .select("*")
     .eq("question_id", questionId)
-    .order("type", { ascending: true }) // AI first
+    .order("type", { ascending: true })
     .order("votes", { ascending: false })
     .order("created_at", { ascending: true });
 
@@ -127,7 +145,7 @@ export async function generateAIAnswer(questionId: string, title: string, descri
   });
 
   if (error) {
-    console.error("AI generation error:", error);
+    console.error("[API] generate-answer error:", error);
     return null;
   }
 

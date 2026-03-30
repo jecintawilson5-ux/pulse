@@ -3,6 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Send } from "lucide-react";
 import { createAnswer } from "@/lib/api";
+import { checkProfanity } from "@/lib/profanity";
+import { logActivity } from "@/lib/activity";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
@@ -19,9 +21,16 @@ export function AddAnswer({ questionId }: { questionId: string }) {
       return;
     }
 
+    const check = checkProfanity(trimmed);
+    if (check.severity === "severe") {
+      toast.error("Your answer contains inappropriate language. Please rephrase.");
+      return;
+    }
+
     setSubmitting(true);
     try {
       await createAnswer(questionId, trimmed);
+      logActivity("submitted_answer", "Submitted a community answer", { questionId });
       setContent("");
       queryClient.invalidateQueries({ queryKey: ["answers", questionId] });
       toast.success("Answer submitted!");
@@ -42,7 +51,8 @@ export function AddAnswer({ questionId }: { questionId: string }) {
         rows={4}
         className="resize-none bg-secondary border-none"
       />
-      <div className="flex justify-end mt-3">
+      <div className="flex justify-between items-center mt-3">
+        <span className="text-xs text-muted-foreground">{content.length > 0 ? `${content.length} chars (min 10)` : ""}</span>
         <Button type="submit" size="sm" disabled={submitting} className="gap-1.5">
           <Send className="h-3.5 w-3.5" />
           {submitting ? "Submitting..." : "Submit Answer"}

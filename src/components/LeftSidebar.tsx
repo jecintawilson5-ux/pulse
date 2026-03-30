@@ -6,6 +6,7 @@ const links = [
   { to: "/", icon: Home, label: "Home" },
   { to: "/trending", icon: TrendingUp, label: "Trending" },
   { to: "/unanswered", icon: HelpCircle, label: "Unanswered" },
+  { to: "/activity", icon: Activity, label: "My Activity" },
 ];
 
 export function LeftSidebar() {
@@ -16,7 +17,7 @@ export function LeftSidebar() {
           <NavLink
             key={link.to}
             to={link.to}
-            end
+            end={link.to === "/"}
             className={({ isActive }) =>
               cn(
                 "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
@@ -30,11 +31,6 @@ export function LeftSidebar() {
             {link.label}
           </NavLink>
         ))}
-        {/* Inactive item */}
-        <div className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-muted-foreground/50 cursor-not-allowed">
-          <Activity className="h-4 w-4" />
-          My Activity
-        </div>
       </nav>
     </aside>
   );
