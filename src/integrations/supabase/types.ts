@@ -44,9 +44,12 @@ export type Database = {
           created_at: string
           id: string
           moderation_status: string
+          parent_version_id: string | null
           question_id: string
+          references_used: Json | null
           type: Database["public"]["Enums"]["answer_type"]
           updated_at: string | null
+          version: number | null
           votes: number
         }
         Insert: {
@@ -54,9 +57,12 @@ export type Database = {
           created_at?: string
           id?: string
           moderation_status?: string
+          parent_version_id?: string | null
           question_id: string
+          references_used?: Json | null
           type?: Database["public"]["Enums"]["answer_type"]
           updated_at?: string | null
+          version?: number | null
           votes?: number
         }
         Update: {
@@ -64,9 +70,12 @@ export type Database = {
           created_at?: string
           id?: string
           moderation_status?: string
+          parent_version_id?: string | null
           question_id?: string
+          references_used?: Json | null
           type?: Database["public"]["Enums"]["answer_type"]
           updated_at?: string | null
+          version?: number | null
           votes?: number
         }
         Relationships: [
@@ -82,35 +91,58 @@ export type Database = {
       questions: {
         Row: {
           ai_status: string
+          answerability_score: number | null
+          canonical_id: string | null
           created_at: string
           description: string | null
           id: string
+          intent: Json | null
+          is_time_sensitive: boolean | null
           quality_score: number | null
           status: string
           title: string
+          ttl_hours: number | null
           updated_at: string | null
         }
         Insert: {
           ai_status?: string
+          answerability_score?: number | null
+          canonical_id?: string | null
           created_at?: string
           description?: string | null
           id?: string
+          intent?: Json | null
+          is_time_sensitive?: boolean | null
           quality_score?: number | null
           status?: string
           title: string
+          ttl_hours?: number | null
           updated_at?: string | null
         }
         Update: {
           ai_status?: string
+          answerability_score?: number | null
+          canonical_id?: string | null
           created_at?: string
           description?: string | null
           id?: string
+          intent?: Json | null
+          is_time_sensitive?: boolean | null
           quality_score?: number | null
           status?: string
           title?: string
+          ttl_hours?: number | null
           updated_at?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "questions_canonical_id_fkey"
+            columns: ["canonical_id"]
+            isOneToOne: false
+            referencedRelation: "questions"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       reports: {
         Row: {
