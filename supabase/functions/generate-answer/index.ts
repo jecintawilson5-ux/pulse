@@ -26,7 +26,27 @@ serve(async (req) => {
     const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-    const systemPrompt = `You are Pulse AI, an expert knowledge assistant. Provide thorough, well-structured answers to questions. Use markdown formatting with headings (##), bullet points, bold text, and code blocks where appropriate. Be accurate, concise, and helpful. If the question is ambiguous, address the most likely interpretation and mention alternatives.`;
+    // Guard: check if AI answer already exists
+    const { data: existing } = await supabase
+      .from("answers")
+      .select("id")
+      .eq("question_id", questionId)
+      .eq("type", "ai")
+      .maybeSingle();
+
+    if (existing) {
+      return new Response(JSON.stringify({ answer: existing, duplicate: true }), {
+        status: 200,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    const systemPrompt = `You are Pulse AI, an expert knowledge assistant. Provide thorough, well-structured answers to questions. Use markdown formatting with headings (##), bullet points, bold text, and code blocks where appropriate. Structure your answer in 3 parts:
+1. **Direct Answer** - Clear, concise response to the question
+2. **Detailed Explanation** - In-depth analysis with examples
+3. **Key Takeaways** - Bullet points summarizing the main insights
+
+Be accurate, concise, and helpful. If the question is ambiguous, address the most likely interpretation and mention alternatives.`;
 
     const userPrompt = description
       ? `Question: ${title}\n\nAdditional context: ${description}`
@@ -68,18 +88,20 @@ serve(async (req) => {
         }
 
         if (!response.ok) {
-          console.error(`AI attempt ${attempts} failed:`, response.status, await response.text());
+          console.error(`[generate-answer] AI attempt ${attempts} failed:`, response.status, await response.text());
           continue;
         }
 
         const data = await response.json();
         aiContent = data.choices?.[0]?.message?.content;
       } catch (e) {
-        console.error(`AI attempt ${attempts} error:`, e);
+        console.error(`[generate-answer] AI attempt ${attempts} error:`, e);
       }
     }
 
     if (!aiContent) {
+      // Update question ai_status to failed
+      await supabase.from("questions").update({ ai_status: "failed" }).eq("id", questionId);
       return new Response(
         JSON.stringify({ error: "AI answer unavailable. Community answers will appear below.", failed: true }),
         { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } }
@@ -94,19 +116,23 @@ serve(async (req) => {
       .single();
 
     if (dbError) {
-      console.error("DB insert error:", dbError);
+      console.error("[generate-answer] DB insert error:", dbError);
+      await supabase.from("questions").update({ ai_status: "failed" }).eq("id", questionId);
       return new Response(JSON.stringify({ error: "Failed to save AI answer" }), {
         status: 500,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
 
+    // Update question ai_status to completed
+    await supabase.from("questions").update({ ai_status: "completed" }).eq("id", questionId);
+
     return new Response(JSON.stringify({ answer }), {
       status: 200,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   } catch (e) {
-    console.error("generate-answer error:", e);
+    console.error("[generate-answer] error:", e);
     return new Response(JSON.stringify({ error: e instanceof Error ? e.message : "Unknown error" }), {
       status: 500,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
