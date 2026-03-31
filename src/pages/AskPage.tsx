@@ -4,9 +4,11 @@ import { Layout } from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { ImageUpload } from "@/components/ImageUpload";
 import { createQuestion } from "@/lib/api";
 import { checkProfanity } from "@/lib/profanity";
 import { logActivity } from "@/lib/activity";
+import { enqueueAction } from "@/lib/offlineQueue";
 import { toast } from "sonner";
 import { Send, Sparkles, AlertTriangle } from "lucide-react";
 
@@ -17,6 +19,7 @@ export default function AskPage() {
   const [description, setDescription] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [profanityWarning, setProfanityWarning] = useState("");
+  const [images, setImages] = useState<{ url: string; path: string }[]>([]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -27,7 +30,6 @@ export default function AskPage() {
       return;
     }
 
-    // Check profanity
     const titleCheck = checkProfanity(trimmedTitle);
     const descCheck = checkProfanity(description);
 
@@ -41,6 +43,15 @@ export default function AskPage() {
     }
 
     setSubmitting(true);
+
+    // Handle offline
+    if (!navigator.onLine) {
+      enqueueAction("QUESTION", { title: trimmedTitle, description: description.trim() || null });
+      toast.info("You're offline. Your question will be posted when you're back online.");
+      navigate("/");
+      return;
+    }
+
     try {
       const question = await createQuestion(
         trimmedTitle,
@@ -76,6 +87,7 @@ export default function AskPage() {
               className="bg-secondary border-none"
               maxLength={200}
               autoFocus
+              aria-label="Question title"
             />
             <p className="text-xs text-muted-foreground mt-1">{title.length}/200 characters (min 10)</p>
           </div>
@@ -89,7 +101,14 @@ export default function AskPage() {
               rows={5}
               className="resize-none bg-secondary border-none"
               maxLength={2000}
+              aria-label="Question description"
             />
+          </div>
+
+          <div>
+            <label className="text-sm font-medium mb-1.5 block">Images (optional)</label>
+            <ImageUpload images={images} onImagesChange={setImages} maxImages={3} />
+            <p className="text-xs text-muted-foreground mt-1">Max 3 images, 1MB each after compression</p>
           </div>
 
           {profanityWarning && (
