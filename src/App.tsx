@@ -10,6 +10,7 @@ import SearchPage from "./pages/SearchPage";
 import TrendingPage from "./pages/TrendingPage";
 import UnansweredPage from "./pages/UnansweredPage";
 import ActivityPage from "./pages/ActivityPage";
+import PortfolioPage from "./pages/PortfolioPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient({
