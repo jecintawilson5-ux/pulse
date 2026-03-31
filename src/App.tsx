@@ -37,6 +37,7 @@ const App = () => (
           <Route path="/trending" element={<TrendingPage />} />
           <Route path="/unanswered" element={<UnansweredPage />} />
           <Route path="/activity" element={<ActivityPage />} />
+          <Route path="/portfolio" element={<PortfolioPage />} />
           <Route path="/profile" element={<NotFound />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
