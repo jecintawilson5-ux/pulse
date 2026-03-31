@@ -10,6 +10,7 @@ import SearchPage from "./pages/SearchPage";
 import TrendingPage from "./pages/TrendingPage";
 import UnansweredPage from "./pages/UnansweredPage";
 import ActivityPage from "./pages/ActivityPage";
+import PortfolioPage from "./pages/PortfolioPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient({
@@ -36,6 +37,7 @@ const App = () => (
           <Route path="/trending" element={<TrendingPage />} />
           <Route path="/unanswered" element={<UnansweredPage />} />
           <Route path="/activity" element={<ActivityPage />} />
+          <Route path="/portfolio" element={<PortfolioPage />} />
           <Route path="/profile" element={<NotFound />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

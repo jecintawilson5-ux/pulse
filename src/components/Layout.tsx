@@ -7,10 +7,13 @@ import { OfflineBanner } from "./OfflineBanner";
 export function Layout({ children, showSidebars = true }: { children: React.ReactNode; showSidebars?: boolean }) {
   return (
     <div className="min-h-screen flex flex-col">
-      <TopNav />
+      {/* Desktop: hide TopNav, use sidebar instead */}
+      <div className="md:hidden">
+        <TopNav />
+      </div>
       <OfflineBanner />
-      <div className="flex flex-1">
-        {showSidebars && <LeftSidebar />}
+      {showSidebars && <LeftSidebar />}
+      <div className="flex flex-1 md:ml-16">
         <main className="flex-1 overflow-y-auto pb-16 md:pb-0">{children}</main>
         {showSidebars && <RightSidebar />}
       </div>
