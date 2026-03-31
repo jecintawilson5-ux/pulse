@@ -1,4 +1,4 @@
-import { Home, Search, Plus, Activity, User } from "lucide-react";
+import { Home, Search, Plus, BarChart2, User } from "lucide-react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
 
