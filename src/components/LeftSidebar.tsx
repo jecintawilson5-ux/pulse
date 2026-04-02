@@ -2,8 +2,7 @@ import { Home, Search, PlusCircle, TrendingUp, BarChart2, Bell, User } from "luc
 import { NavLink } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import logoP from "@/assets/logo-v3-p-pulse.png";
-
+import { PulseLogo } from "@/components/PulseLogo";
 const navItems = [
   { to: "/", icon: Home, label: "Home" },
   { to: "/search", icon: Search, label: "Search" },
@@ -19,9 +18,8 @@ export function LeftSidebar() {
     <aside className="hidden lg:flex flex-col fixed top-0 left-0 h-screen z-40 w-64 border-r border-border bg-background/95 backdrop-blur-xl">
       {/* Logo */}
       <div className="flex items-center h-16 px-5 border-b border-border shrink-0">
-        <NavLink to="/" className="flex items-center gap-3">
-          <img src={logoP} alt="Pulse" className="h-9 w-9 object-contain shrink-0" />
-          <span className="text-xl font-bold text-foreground">Pulse</span>
+        <NavLink to="/">
+          <PulseLogo size="md" animated />
         </NavLink>
       </div>
 
