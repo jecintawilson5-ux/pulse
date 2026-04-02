@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,86 +6,70 @@
 
 @layer base {
   :root {
-    /* 60-30-10 Light Mode */
-    --background: 210 20% 98%;        /* #F9FAFB */
-    --foreground: 221 39% 11%;        /* #111827 */
-    --card: 0 0% 100%;                /* #FFFFFF */
-    --card-foreground: 221 39% 11%;   /* #111827 */
+    --background: 220 14% 96%;
+    --foreground: 230 25% 10%;
+    --card: 0 0% 100%;
+    --card-foreground: 230 25% 10%;
     --popover: 0 0% 100%;
-    --popover-foreground: 221 39% 11%;
-    --primary: 244 76% 59%;           /* #4F46E5 */
+    --popover-foreground: 230 25% 10%;
+    --primary: 246 82% 67%;
     --primary-foreground: 0 0% 100%;
-    --primary-hover: 239 84% 67%;     /* #6366F1 */
-    --secondary: 0 0% 100%;           /* #FFFFFF */
-    --secondary-foreground: 221 39% 11%;
-    --muted: 210 20% 96%;
-    --muted-foreground: 218 11% 50%;  /* #6B7280 */
-    --accent: 244 76% 59%;            /* #4F46E5 */
+    --secondary: 0 0% 100%;
+    --secondary-foreground: 230 25% 10%;
+    --muted: 220 14% 93%;
+    --muted-foreground: 233 8% 55%;
+    --accent: 246 82% 67%;
     --accent-foreground: 0 0% 100%;
-    --accent-hover: 232 92% 76%;      /* #818CF8 */
+    --accent2: 168 61% 50%;
+    --accent2-foreground: 0 0% 100%;
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
-    --border: 216 12% 84%;            /* #D1D5DB */
-    --input: 216 12% 84%;
-    --ring: 244 76% 59%;
+    --border: 220 10% 87%;
+    --input: 220 10% 87%;
+    --ring: 246 82% 67%;
     --radius: 0.75rem;
-    --badge: 38 92% 50%;              /* #F59E0B */
-    --badge-foreground: 0 0% 100%;
 
-    --sidebar-background: 210 20% 98%;
-    --sidebar-foreground: 221 39% 11%;
-    --sidebar-primary: 244 76% 59%;
+    --sidebar-background: 220 14% 97%;
+    --sidebar-foreground: 230 25% 10%;
+    --sidebar-primary: 246 82% 67%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 210 20% 96%;
-    --sidebar-accent-foreground: 221 39% 11%;
-    --sidebar-border: 216 12% 84%;
-    --sidebar-ring: 244 76% 59%;
-
-    --pulse-glow: 244 76% 59%;
-    --pulse-surface: 210 20% 96%;
-    --pulse-ai: 170 70% 45%;
-    --pulse-ai-foreground: 0 0% 100%;
+    --sidebar-accent: 220 14% 93%;
+    --sidebar-accent-foreground: 230 25% 10%;
+    --sidebar-border: 220 10% 87%;
+    --sidebar-ring: 246 82% 67%;
   }
 
   .dark {
-    /* 60-30-10 Dark Mode */
-    --background: 220 26% 7%;         /* #111827 */
-    --foreground: 210 20% 98%;        /* #F9FAFB */
-    --card: 217 19% 15%;              /* #1F2937 */
-    --card-foreground: 210 20% 98%;
-    --popover: 217 19% 15%;
-    --popover-foreground: 210 20% 98%;
-    --primary: 244 76% 59%;           /* #4F46E5 */
+    --background: 228 25% 5%;
+    --foreground: 245 20% 96%;
+    --card: 228 20% 10%;
+    --card-foreground: 245 20% 96%;
+    --popover: 228 20% 10%;
+    --popover-foreground: 245 20% 96%;
+    --primary: 246 82% 67%;
     --primary-foreground: 0 0% 100%;
-    --primary-hover: 239 84% 67%;     /* #6366F1 */
-    --secondary: 217 19% 15%;         /* #1F2937 */
-    --secondary-foreground: 210 20% 98%;
-    --muted: 217 19% 18%;
-    --muted-foreground: 218 11% 65%;  /* #9CA3AF */
-    --accent: 244 76% 59%;
+    --secondary: 228 20% 10%;
+    --secondary-foreground: 245 20% 96%;
+    --muted: 228 18% 14%;
+    --muted-foreground: 236 8% 56%;
+    --accent: 246 82% 67%;
     --accent-foreground: 0 0% 100%;
-    --accent-hover: 232 92% 76%;      /* #818CF8 */
+    --accent2: 168 61% 50%;
+    --accent2-foreground: 0 0% 100%;
     --destructive: 0 62% 45%;
     --destructive-foreground: 0 0% 100%;
-    --border: 216 13% 27%;            /* #374151 */
-    --input: 216 13% 27%;
-    --ring: 244 76% 59%;
-    --badge: 38 92% 50%;              /* #F59E0B */
-    --badge-foreground: 0 0% 100%;
+    --border: 0 0% 100% / 0.07;
+    --input: 0 0% 100% / 0.07;
+    --ring: 246 82% 67%;
 
-    --sidebar-background: 220 26% 6%;
-    --sidebar-foreground: 210 20% 90%;
-    --sidebar-primary: 244 76% 59%;
+    --sidebar-background: 228 22% 8%;
+    --sidebar-foreground: 245 20% 90%;
+    --sidebar-primary: 246 82% 67%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 217 19% 13%;
-    --sidebar-accent-foreground: 210 20% 90%;
-    --sidebar-border: 216 13% 22%;
-    --sidebar-ring: 244 76% 59%;
-
-    --pulse-glow: 244 76% 65%;
-    --pulse-surface: 217 19% 13%;
-    --pulse-ai: 170 70% 45%;
-    --pulse-ai-foreground: 0 0% 100%;
+    --sidebar-accent: 228 18% 11%;
+    --sidebar-accent-foreground: 245 20% 90%;
+    --sidebar-border: 0 0% 100% / 0.07;
+    --sidebar-ring: 246 82% 67%;
   }
 }
 
@@ -98,23 +82,47 @@
   }
   body {
     @apply bg-background text-foreground;
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
   }
 }
 
-/* Smooth scrollbar */
+/* Scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 4px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: hsl(var(--muted-foreground) / 0.3);
-  border-radius: 3px;
+  background: hsl(var(--muted-foreground) / 0.2);
+  border-radius: 4px;
 }
 
-/* Pulse AI badge glow */
-.ai-glow {
-  box-shadow: 0 0 20px hsl(var(--pulse-ai) / 0.3);
+/* Animations */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.4s ease both;
+}
+
+.animate-fade-up-delay-1 {
+  animation: fade-up 0.4s 0.05s ease both;
+}
+
+.animate-fade-up-delay-2 {
+  animation: fade-up 0.4s 0.1s ease both;
+}
+
+.animate-fade-up-delay-3 {
+  animation: fade-up 0.4s 0.15s ease both;
 }

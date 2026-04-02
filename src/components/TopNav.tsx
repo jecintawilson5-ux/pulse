@@ -1,10 +1,9 @@
 import { Search, Plus, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { Input } from "@/components/ui/input";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import logoP from "@/assets/logo-v3-p-pulse.png";
+import { PulseLogo } from "@/components/PulseLogo";
 
 export function TopNav() {
   const navigate = useNavigate();
@@ -19,38 +18,29 @@ export function TopNav() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-xl">
-      <div className="flex h-16 items-center gap-4 px-4 md:px-6">
-        {/* Logo */}
-        <button
-          onClick={() => navigate("/")}
-          className="flex items-center gap-2 shrink-0"
-        >
-          <img src={logoP} alt="Pulse" className="h-8 w-auto" />
+      <div className="flex h-14 items-center gap-3 px-4">
+        <button onClick={() => navigate("/")} className="shrink-0">
+          <PulseLogo size="sm" />
         </button>
 
-        {/* Search */}
-        <form onSubmit={handleSearch} className="flex-1 max-w-xl mx-auto">
+        <form onSubmit={handleSearch} className="flex-1 max-w-md mx-auto">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-            <Input
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground/50" />
+            <input
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search questions..."
-              className="pl-10 bg-secondary border-none h-10"
+              placeholder="Search..."
+              className="w-full bg-muted border-none rounded-lg pl-9 pr-3 py-2 text-[13px] outline-none focus:ring-1 focus:ring-primary/30"
             />
           </div>
         </form>
 
-        {/* Actions */}
-        <div className="flex items-center gap-2 shrink-0">
-          <Button onClick={() => navigate("/ask")} size="sm" className="gap-1.5">
-            <Plus className="h-4 w-4" />
-            <span className="hidden sm:inline">Ask Question</span>
+        <div className="flex items-center gap-1.5 shrink-0">
+          <Button onClick={() => navigate("/ask")} size="sm" className="gap-1.5 h-8 text-xs rounded-lg">
+            <Plus className="h-3.5 w-3.5" />
+            Ask
           </Button>
           <ThemeToggle />
-          <Button variant="ghost" size="icon" className="rounded-full">
-            <User className="h-5 w-5" />
-          </Button>
         </div>
       </div>
     </header>
