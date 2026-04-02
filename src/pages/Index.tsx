@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Sparkles, TrendingUp, HelpCircle, Loader2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import heroBrain from "@/assets/logo-v1-brain-pulse.png";
+import { PulseLogo } from "@/components/PulseLogo";
 import bgNodes from "@/assets/logo-v2-nodes-wave.png";
 
 const tabs = [
