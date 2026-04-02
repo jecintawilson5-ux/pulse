@@ -2,8 +2,7 @@ import { Home, Search, PlusCircle, TrendingUp, BarChart2, Bell, User } from "luc
 import { NavLink } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import logoP from "@/assets/logo-v3-p-pulse.png";
-
+import { PulseLogo } from "@/components/PulseLogo";
 const navItems = [
   { to: "/", icon: Home, label: "Home" },
   { to: "/search", icon: Search, label: "Search" },
