@@ -8,13 +8,12 @@ import { MobileDiscoverSheet } from "./MobileDiscoverSheet";
 export function Layout({ children, showSidebars = true }: { children: React.ReactNode; showSidebars?: boolean }) {
   return (
     <div className="min-h-screen flex flex-col">
-      {/* Mobile: show TopNav; Desktop: use sidebar */}
       <div className="lg:hidden">
         <TopNav />
       </div>
       <OfflineBanner />
       {showSidebars && <LeftSidebar />}
-      <div className="flex flex-1 lg:ml-64">
+      <div className="flex flex-1 lg:ml-[220px]">
         <main className="flex-1 overflow-y-auto pb-16 lg:pb-0">{children}</main>
         {showSidebars && <RightSidebar />}
       </div>

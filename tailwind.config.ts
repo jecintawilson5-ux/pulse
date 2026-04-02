@@ -14,7 +14,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ["Space Grotesk", "sans-serif"],
+        display: ["Syne", "sans-serif"],
+        sans: ["DM Sans", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -42,6 +43,10 @@ export default {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",
         },
+        accent2: {
+          DEFAULT: "hsl(var(--accent2))",
+          foreground: "hsl(var(--accent2-foreground))",
+        },
         popover: {
           DEFAULT: "hsl(var(--popover))",
           foreground: "hsl(var(--popover-foreground))",
@@ -60,18 +65,6 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
-        pulse: {
-          glow: "hsl(var(--pulse-glow))",
-          surface: "hsl(var(--pulse-surface))",
-          ai: "hsl(var(--pulse-ai))",
-          "ai-foreground": "hsl(var(--pulse-ai-foreground))",
-        },
-        badge: {
-          DEFAULT: "hsl(var(--badge))",
-          foreground: "hsl(var(--badge-foreground))",
-        },
-        "primary-hover": "hsl(var(--primary-hover))",
-        "accent-hover": "hsl(var(--accent-hover))",
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -87,15 +80,10 @@ export default {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
-        "pulse-ring": {
-          "0%": { transform: "scale(0.9)", opacity: "1" },
-          "100%": { transform: "scale(1.3)", opacity: "0" },
-        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "pulse-ring": "pulse-ring 1.5s ease-out infinite",
       },
     },
   },
