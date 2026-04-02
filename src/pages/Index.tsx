@@ -70,7 +70,7 @@ export default function Index() {
       <div className="relative z-10 max-w-2xl mx-auto p-4 md:p-6 space-y-5">
         {/* Hero */}
         <div className="flex flex-col items-center text-center py-6 space-y-3">
-          <img src={heroBrain} alt="Pulse AI" className="h-12 w-auto animate-pulse" />
+          <PulseLogo size="lg" animated showText={false} />
           <h1 className="text-2xl font-bold tracking-tight">Ask anything. Get intelligent answers.</h1>
           <p className="text-sm text-muted-foreground max-w-md">
             Pulse combines AI with community knowledge to deliver fast, reliable insights.
