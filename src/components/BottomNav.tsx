@@ -1,5 +1,5 @@
 import { Home, Search, Plus, BarChart2, User } from "lucide-react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { cn } from "@/lib/utils";
 
 const navItems = [
@@ -13,7 +13,7 @@ const navItems = [
 export function BottomNav() {
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-50 border-t border-border bg-background/90 backdrop-blur-xl lg:hidden">
-      <div className="flex items-center justify-around h-14 px-2">
+      <div className="flex items-center justify-around h-16 px-2">
         {navItems.map((item) => (
           <NavLink
             key={item.to}
@@ -30,7 +30,7 @@ export function BottomNav() {
             }
           >
             {item.isAction ? (
-              <div className="flex items-center justify-center w-10 h-10 rounded-full bg-primary text-primary-foreground -mt-4 shadow-lg shadow-primary/30">
+              <div className="flex items-center justify-center w-11 h-11 rounded-full bg-primary text-primary-foreground -mt-5 shadow-lg shadow-primary/30">
                 <item.icon className="h-5 w-5" />
               </div>
             ) : (

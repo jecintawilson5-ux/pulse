@@ -12,8 +12,8 @@ export function Layout({ children, showSidebars = true }: { children: React.Reac
         <TopNav />
       </div>
       <OfflineBanner />
-      {showSidebars && <LeftSidebar />}
-      <div className="flex flex-1 lg:ml-[220px]">
+      <LeftSidebar />
+      <div className="flex flex-1 lg:ml-64">
         <main className="flex-1 overflow-y-auto pb-16 lg:pb-0">{children}</main>
         {showSidebars && <RightSidebar />}
       </div>
