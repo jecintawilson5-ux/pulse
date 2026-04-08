@@ -1,4 +1,4 @@
-import { Search, Plus, User } from "lucide-react";
+import { Search, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { useNavigate } from "react-router-dom";
@@ -23,20 +23,20 @@ export function TopNav() {
           <PulseLogo size="sm" />
         </button>
 
-        <form onSubmit={handleSearch} className="flex-1 max-w-md mx-auto">
+        <form onSubmit={handleSearch} className="flex-1 max-w-sm mx-auto">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground/50" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground/40" />
             <input
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search..."
-              className="w-full bg-muted border-none rounded-lg pl-9 pr-3 py-2 text-[13px] outline-none focus:ring-1 focus:ring-primary/30"
+              className="w-full bg-muted border-none rounded-xl pl-9 pr-3 py-2 text-[13px] outline-none focus:ring-1 focus:ring-primary/30"
             />
           </div>
         </form>
 
         <div className="flex items-center gap-1.5 shrink-0">
-          <Button onClick={() => navigate("/ask")} size="sm" className="gap-1.5 h-8 text-xs rounded-lg">
+          <Button onClick={() => navigate("/ask")} size="sm" className="gap-1.5 h-8 text-xs rounded-xl">
             <Plus className="h-3.5 w-3.5" />
             Ask
           </Button>

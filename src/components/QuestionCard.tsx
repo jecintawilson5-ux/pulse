@@ -1,4 +1,4 @@
-import { MessageSquare, ChevronUp, ChevronDown, Clock } from "lucide-react";
+import { MessageSquare, ChevronUp, Sparkles, Clock } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import type { Question } from "@/lib/api";
 
@@ -18,24 +18,21 @@ export function QuestionCard({ question }: { question: Question }) {
   return (
     <button
       onClick={() => navigate(`/question/${question.id}`)}
-      className="w-full text-left bg-card border border-border rounded-xl p-[18px] hover:border-border/80 hover:bg-muted/50 transition-all duration-150 hover:-translate-y-px flex gap-4"
+      className="w-full text-left bg-card border border-border rounded-2xl p-5 hover:border-primary/20 hover:shadow-md hover:shadow-primary/5 transition-all duration-200 hover:-translate-y-0.5 flex gap-4 group"
     >
       {/* Vote column */}
-      <div className="flex flex-col items-center gap-1 pt-0.5 shrink-0">
-        <div className="w-7 h-7 bg-muted border border-border rounded-md flex items-center justify-center text-muted-foreground hover:border-primary hover:text-primary hover:bg-primary/10 transition-colors">
-          <ChevronUp className="h-3 w-3" />
+      <div className="flex flex-col items-center gap-0.5 shrink-0">
+        <div className="w-8 h-8 bg-muted border border-border rounded-lg flex items-center justify-center text-muted-foreground group-hover:border-primary/30 group-hover:text-primary transition-colors">
+          <ChevronUp className="h-4 w-4" />
         </div>
-        <span className="text-[13px] font-semibold font-display text-muted-foreground">
+        <span className="text-[13px] font-bold font-display text-foreground tabular-nums">
           {question.vote_count ?? 0}
         </span>
-        <div className="w-7 h-7 bg-muted border border-border rounded-md flex items-center justify-center text-muted-foreground hover:border-primary hover:text-primary hover:bg-primary/10 transition-colors">
-          <ChevronDown className="h-3 w-3" />
-        </div>
       </div>
 
       {/* Content */}
       <div className="flex-1 min-w-0">
-        <h3 className="text-[15px] font-medium text-foreground leading-snug mb-1.5 tracking-[-0.1px]">
+        <h3 className="text-[15px] font-semibold text-foreground leading-snug mb-1 tracking-[-0.2px] group-hover:text-primary transition-colors">
           {question.title}
         </h3>
         {question.description && (
@@ -44,22 +41,26 @@ export function QuestionCard({ question }: { question: Question }) {
           </p>
         )}
         <div className="flex items-center gap-3 flex-wrap">
-          {/* Tags — extract from title keywords */}
-          <div className="flex gap-1.5 flex-wrap">
-            {question.ai_status === "completed" && (
-              <span className="inline-flex items-center gap-1 text-[10.5px] font-medium px-2 py-0.5 rounded bg-accent2/10 border border-accent2/20 text-accent2">
-                <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-                AI answered
-              </span>
-            )}
-          </div>
+          {question.ai_status === "completed" && (
+            <span className="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2 py-1 rounded-lg bg-accent2/10 border border-accent2/20 text-accent2">
+              <Sparkles className="h-3 w-3" />
+              AI Answered
+            </span>
+          )}
+          {question.ai_status === "pending" && (
+            <span className="inline-flex items-center gap-1.5 text-[11px] font-medium px-2 py-1 rounded-lg bg-primary/10 border border-primary/20 text-primary animate-pulse">
+              <Sparkles className="h-3 w-3" />
+              AI Processing
+            </span>
+          )}
 
-          <div className="flex items-center gap-2.5 ml-auto">
-            <span className="flex items-center gap-1 text-xs text-muted-foreground/50">
-              <MessageSquare className="h-3 w-3" />
+          <div className="flex items-center gap-3 ml-auto text-muted-foreground/60">
+            <span className="flex items-center gap-1 text-[12px]">
+              <MessageSquare className="h-3.5 w-3.5" />
               {question.answer_count ?? 0}
             </span>
-            <span className="text-xs text-muted-foreground/50">
+            <span className="flex items-center gap-1 text-[12px]">
+              <Clock className="h-3.5 w-3.5" />
               {timeAgo(question.created_at)}
             </span>
           </div>
