@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { PulseLogo } from "@/components/PulseLogo";
+import { CognaraLogo } from "@/components/CognaraLogo";
 
 export function TopNav() {
   const navigate = useNavigate();

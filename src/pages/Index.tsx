@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { HelpCircle, Loader2, Plus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { PulseLogo } from "@/components/PulseLogo";
+import { CognaraLogo } from "@/components/CognaraLogo";
 
 const tabs = [
   { key: "newest" as const, label: "For You" },

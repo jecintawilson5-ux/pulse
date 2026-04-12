@@ -2,7 +2,7 @@ import { Home, Search, PlusCircle, TrendingUp, BarChart2, Bell, User, Settings }
 import { NavLink } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { PulseLogo } from "@/components/PulseLogo";
+import { CognaraLogo } from "@/components/CognaraLogo";
 
 const mainNav = [
   { to: "/", icon: Home, label: "Home" },
