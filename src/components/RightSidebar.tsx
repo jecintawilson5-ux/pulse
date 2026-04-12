@@ -141,7 +141,7 @@ export function RightSidebar() {
               PA
             </div>
             <div>
-              <div className="text-[13px] font-semibold text-foreground">Pulse AI</div>
+              <div className="text-[13px] font-semibold text-foreground">Cognara AI</div>
               <div className="text-[11px] text-muted-foreground">Multi-Domain Expert</div>
             </div>
           </div>
@@ -159,7 +159,7 @@ export function RightSidebar() {
       {/* Community Pulse */}
       <div className="border-t border-border pt-4">
         <div className="text-[11px] font-bold tracking-[0.1em] uppercase text-muted-foreground/50 font-display mb-3">
-          Community Pulse
+           Community Stats
         </div>
         <div className="space-y-2 text-[12px] text-muted-foreground">
           <div className="flex items-center gap-2">

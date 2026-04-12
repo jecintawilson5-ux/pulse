@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { HelpCircle, Loader2, Plus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { PulseLogo } from "@/components/PulseLogo";
+import { CognaraLogo } from "@/components/CognaraLogo";
 
 const tabs = [
   { key: "newest" as const, label: "For You" },
@@ -66,7 +66,7 @@ export default function Index() {
           <div className="absolute top-[-30px] left-1/2 -translate-x-1/2 w-[400px] h-[200px] bg-[radial-gradient(ellipse,hsl(var(--primary)/0.08)_0%,transparent_70%)] pointer-events-none" />
 
           <div className="flex justify-center mb-5">
-            <PulseLogo size="lg" showText={false} />
+            <CognaraLogo size="lg" showText={false} />
           </div>
 
           <div className="inline-flex items-center gap-1.5 bg-primary/10 border border-primary/20 text-primary text-[11.5px] font-semibold px-3.5 py-1.5 rounded-full mb-4">
@@ -78,7 +78,7 @@ export default function Index() {
             Ask anything.<br />Get intelligent answers.
           </h1>
           <p className="text-muted-foreground text-[15px] font-light max-w-[460px] mx-auto leading-relaxed mb-8">
-            Pulse blends AI with community knowledge to surface fast, reliable insights — on any topic.
+            Cognara blends AI with community knowledge to surface fast, reliable insights — on any topic.
           </p>
         </div>
 
