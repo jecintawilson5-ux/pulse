@@ -20,7 +20,7 @@ export function TopNav() {
     <header className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-xl">
       <div className="flex h-14 items-center gap-3 px-4">
         <button onClick={() => navigate("/")} className="shrink-0">
-          <PulseLogo size="sm" />
+          <CognaraLogo size="sm" />
         </button>
 
         <form onSubmit={handleSearch} className="flex-1 max-w-sm mx-auto">

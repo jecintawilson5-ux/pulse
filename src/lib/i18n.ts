@@ -15,7 +15,7 @@ const resources = {
 
       // Hero
       "hero.title": "Ask anything. Get intelligent answers.",
-      "hero.subtitle": "Pulse combines AI with community knowledge to deliver fast, reliable insights.",
+      "hero.subtitle": "Cognara combines AI with community knowledge to deliver fast, reliable insights.",
 
       // Ask
       "ask.placeholder": "What do you want to know?",
@@ -50,7 +50,7 @@ const resources = {
       "ai.thinking": "Thinking…",
       "ai.analyzing": "Analyzing your question…",
       "ai.generating": "Generating answer…",
-      "ai.analyzing_label": "Pulse AI is analyzing your question",
+      "ai.analyzing_label": "Cognara AI is analyzing your question",
       "ai.failed": "AI took a break. Community answers will appear below.",
       "ai.retry": "Retry",
 

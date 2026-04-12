@@ -54,7 +54,7 @@ export function LeftSidebar() {
       {/* Logo */}
       <div className="px-4 pt-6 pb-2">
         <NavLink to="/" className="block px-3 pb-6">
-          <PulseLogo size="lg" />
+          <CognaraLogo size="lg" />
         </NavLink>
       </div>
 

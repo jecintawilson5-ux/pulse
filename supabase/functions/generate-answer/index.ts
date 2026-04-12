@@ -41,7 +41,7 @@ serve(async (req) => {
       });
     }
 
-    const systemPrompt = `You are Pulse AI, an expert knowledge assistant. Provide thorough, well-structured answers to questions. Use markdown formatting with headings (##), bullet points, bold text, and code blocks where appropriate. Structure your answer in 3 parts:
+    const systemPrompt = `You are Cognara AI, an expert knowledge assistant. Provide thorough, well-structured answers to questions. Use markdown formatting with headings (##), bullet points, bold text, and code blocks where appropriate. Structure your answer in 3 parts:
 1. **Direct Answer** - Clear, concise response to the question
 2. **Detailed Explanation** - In-depth analysis with examples
 3. **Key Takeaways** - Bullet points summarizing the main insights

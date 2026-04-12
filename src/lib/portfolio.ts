@@ -159,7 +159,7 @@ export async function computePortfolio(): Promise<PortfolioStats> {
   const topDomains = domains.slice(0, 3).map((d) => d.domain);
   const tagline = topDomains.length > 0
     ? `Contributor in ${topDomains.join(", ")}`
-    : "Building expertise on Pulse";
+    : "Building expertise on Cognara";
 
   return {
     questionsAsked,
