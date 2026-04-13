@@ -1,8 +1,9 @@
-import { Home, Search, PlusCircle, TrendingUp, BarChart2, Bell, User, Settings } from "lucide-react";
-import { NavLink } from "react-router-dom";
+import { Home, Search, PlusCircle, TrendingUp, BarChart2, Bell, User, Settings, LogIn } from "lucide-react";
+import { NavLink, useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { CognaraLogo } from "@/components/CognaraLogo";
+import { useAuth } from "@/hooks/useAuth";
 
 const mainNav = [
   { to: "/", icon: Home, label: "Home" },
@@ -49,16 +50,20 @@ function SidebarLink({ item }: { item: { to: string; icon: React.ElementType; la
 }
 
 export function LeftSidebar() {
+  const { user, profile } = useAuth();
+  const navigate = useNavigate();
+
+  const displayName = profile?.username || user?.email?.split("@")[0] || "Guest";
+  const initial = displayName[0]?.toUpperCase() || "?";
+
   return (
     <aside className="hidden lg:flex flex-col fixed top-0 left-0 h-screen z-40 w-64 border-r border-border bg-sidebar">
-      {/* Logo */}
       <div className="px-4 pt-6 pb-2">
         <NavLink to="/" className="block px-3 pb-6">
           <CognaraLogo size="lg" />
         </NavLink>
       </div>
 
-      {/* Navigation */}
       <nav className="flex-1 flex flex-col px-3 overflow-y-auto gap-6">
         <div className="space-y-1">
           {mainNav.map((item) => (
@@ -89,21 +94,36 @@ export function LeftSidebar() {
         </div>
       </nav>
 
-      {/* Bottom */}
       <div className="mt-auto border-t border-border p-4 space-y-3">
         <div className="flex items-center gap-2.5 px-3">
           <ThemeToggle />
           <span className="text-xs text-muted-foreground">Toggle theme</span>
         </div>
-        <div className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-muted transition-colors cursor-pointer">
-          <div className="w-9 h-9 rounded-full bg-gradient-to-br from-primary to-accent2 flex items-center justify-center text-sm font-bold text-white shrink-0">
-            V
+
+        {user ? (
+          <div
+            onClick={() => navigate("/profile")}
+            className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-muted transition-colors cursor-pointer"
+          >
+            <div className="w-9 h-9 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center text-sm font-bold text-white shrink-0">
+              {initial}
+            </div>
+            <div className="min-w-0">
+              <div className="text-[13px] font-semibold text-foreground leading-tight truncate">{displayName}</div>
+              <div className="text-[11px] text-muted-foreground truncate">{user.email}</div>
+            </div>
           </div>
-          <div className="min-w-0">
-            <div className="text-[13px] font-semibold text-foreground leading-tight truncate">Valor</div>
-            <div className="text-[11px] text-muted-foreground">Member · 142 pts</div>
+        ) : (
+          <div
+            onClick={() => navigate("/auth")}
+            className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-muted transition-colors cursor-pointer"
+          >
+            <div className="w-9 h-9 rounded-full bg-muted flex items-center justify-center shrink-0">
+              <LogIn className="w-4 h-4 text-muted-foreground" />
+            </div>
+            <div className="text-[13px] font-medium text-muted-foreground">Sign In</div>
           </div>
-        </div>
+        )}
       </div>
     </aside>
   );
